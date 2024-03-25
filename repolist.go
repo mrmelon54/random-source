@@ -51,23 +51,23 @@ func (r *RepoListService) Run() {
 			if !i.Fork {
 				// I think we trust GitHub to give us valid times, famous last words
 				t, _ := time.Parse(time.RFC3339, i.UpdatedAt)
-				err := r.db.UpdateRepository(context.Background(), database.UpdateRepositoryParams{
-					Branch:    i.DefaultBranch,
-					UpdatedAt: t,
-					Name:      i.CloneUrl,
-				})
-				// this worked fine, now continue
-				if err == nil {
-					continue
-				}
 				err = r.db.AddRepository(context.Background(), database.AddRepositoryParams{
 					Name:      i.CloneUrl,
 					Branch:    i.DefaultBranch,
 					UpdatedAt: t,
 				})
+				// this worked fine, now continue
+				if err == nil {
+					continue
+				}
+				err = r.db.UpdateRepository(context.Background(), database.UpdateRepositoryParams{
+					Branch:    i.DefaultBranch,
+					UpdatedAt: t,
+					Name:      i.CloneUrl,
+				})
 				if err != nil {
-					log.Printf("Failed to add repository %s to database: %s\n", i.FullName, err)
-					return
+					log.Printf("Failed to add or update repository %s in database: %s\n", i.FullName, err)
+					continue
 				}
 			}
 		}
