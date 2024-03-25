@@ -8,6 +8,11 @@ SET branch=?,
     updated_at=?
 WHERE name = ?;
 
+-- name: RemoveRepository :exec
+DELETE
+FROM repositories
+WHERE id = ?;
+
 -- name: GetNonProcessedRepo :one
 SELECT *
 FROM repositories

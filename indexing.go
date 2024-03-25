@@ -11,6 +11,7 @@ import (
 	"github.com/go-git/go-billy/v5/util"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/transport"
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/mrmelon54/random-source/database"
 	"io"
@@ -65,6 +66,9 @@ func (s *IndexingService) Run() {
 		})
 		if err != nil {
 			log.Println("Failed to clone repository:", err)
+			if errors.Is(err, transport.ErrEmptyRemoteRepository) {
+				_ = s.db.RemoveRepository(context.Background(), repo.ID)
+			}
 			continue
 		}
 		worktree, err := clone.Worktree()

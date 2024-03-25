@@ -86,6 +86,17 @@ func (q *Queries) RandomIndexedFile(ctx context.Context, lines int64) (FilesInde
 	return i, err
 }
 
+const removeRepository = `-- name: RemoveRepository :exec
+DELETE
+FROM repositories
+WHERE id = ?
+`
+
+func (q *Queries) RemoveRepository(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, removeRepository, id)
+	return err
+}
+
 const updateIndexedAt = `-- name: UpdateIndexedAt :exec
 UPDATE repositories
 SET indexed_at = ?
