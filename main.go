@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/MrMelon54/exit-reload"
-	"github.com/julienschmidt/httprouter"
 	"github.com/robfig/cron/v3"
 	"io"
 	"log"
@@ -59,8 +58,7 @@ func main() {
 	// call index service in case changes were made
 	go indexService.Run()
 
-	r := httprouter.New()
-	r.GET("/", func(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	handler := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 		index, err := indexService.db.RandomIndexedFile(req.Context(), 50)
 		if err != nil {
 			http.Error(rw, "500 Internal Server Error", http.StatusInternalServerError)
@@ -75,7 +73,7 @@ func main() {
 	})
 	httpSrv := http.Server{
 		Addr:              *listenFlag,
-		Handler:           r,
+		Handler:           handler,
 		ReadTimeout:       time.Minute,
 		ReadHeaderTimeout: time.Minute,
 		WriteTimeout:      time.Minute,
