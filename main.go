@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/MrMelon54/exit-reload"
+	"github.com/mrmelon54/exit-reload"
 	"github.com/robfig/cron/v3"
 	"io"
 	"log"
