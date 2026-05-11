@@ -3,8 +3,8 @@ module github.com/mrmelon54/random-source
 go 1.26.0
 
 require (
-	github.com/go-git/go-billy/v5 v5.8.0
-	github.com/go-git/go-git/v5 v5.18.0
+	github.com/go-git/go-billy/v5 v5.9.0
+	github.com/go-git/go-git/v5 v5.19.0
 	github.com/golang-migrate/migrate/v4 v4.19.1
 	github.com/mrmelon54/exit-reload v0.0.2
 	github.com/robfig/cron/v3 v3.0.1
@@ -23,7 +23,7 @@ require (
 	github.com/kevinburke/ssh_config v1.6.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/mattn/go-sqlite3 v1.14.42 // indirect
-	github.com/pjbgf/sha1cd v0.5.0 // indirect
+	github.com/pjbgf/sha1cd v0.6.0 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/skeema/knownhosts v1.3.2 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
